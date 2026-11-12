@@ -47,7 +47,7 @@ docs/             HLD, LLD, ADRs, brief
 
 | Papel | Escolha | Por quê |
 | --- | --- | --- |
-| Frontend/BFF | Next.js com App Router | Next.js: HLD, seção 5 ([ADR 0002](adr/0002-next-bff-websocket-direto.md)); App Router: a definir |
+| Frontend/BFF | Next.js com App Router | Next.js: HLD, seção 5 ([ADR 0002](adr/0002-next-bff-websocket-direto.md)); App Router: confirmado por Eduardo Guimarães para este projeto; motivo arquitetural: a definir |
 | Leituras no cliente que o tempo real altera | SWR | A definir |
 | Tempo real, no servidor e no cliente | Socket.IO | [ADR 0019](adr/0019-socket-io-tempo-real.md) |
 | API do chat | NestJS | HLD, seção 5 |
@@ -406,7 +406,8 @@ As decisões que mudam o desenho estão no HLD, seção 10.
       schema das variáveis.
 - [ ] Parser da conferência de somente leitura (pglast ou sqlglot).
 - [ ] Biblioteca de log estruturado (pino e structlog, ou o logger de cada framework).
-- [ ] Porquê das escolhas sem motivo registrado: App Router, SWR, FastAPI próprio, uv; ADRs 0017,
+- [ ] Motivo arquitetural do App Router e das escolhas sem motivo registrado: SWR, FastAPI próprio,
+      uv; ADRs 0017,
       0018, 0019, 0021 e 0022.
 
 **Componentes**
