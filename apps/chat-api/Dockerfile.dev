@@ -1,0 +1,8 @@
+FROM node:26-bookworm-slim
+
+RUN npm install --global pnpm@11.28.11
+
+USER node
+WORKDIR /home/node/app/apps/chat-api
+
+CMD ["sh", "-c", "pnpm install --frozen-lockfile --store-dir=/home/node/app/.pnpm-store || true; exec tail -f /dev/null"]

@@ -331,8 +331,8 @@ A definir. O que cada contêiner recebe está no HLD, seção 8, "Configuração
 
 ## 10. Ambiente de desenvolvimento
 
-Tudo roda em contêineres, pelo `compose.yaml` da raiz (projeto `fullcycle-slack-ia`). O que
-substitui cada serviço de produção segue o HLD, seção 9, "Implantação e ambientes".
+O ambiente local usa o `compose.yaml` da raiz. Os comandos de uso ficam no README. O desenho dos
+serviços segue o HLD, seção 9, "Implantação e ambientes".
 
 | Serviço | Imagem | Porta no host | Papel |
 | --- | --- | --- | --- |
@@ -346,10 +346,11 @@ Entram depois: o Redis, quando o primeiro uso dele for implementado, e os servi�
 
 **Contêineres dos apps**
 
-- A imagem não tem dependências. O `CMD` roda `pnpm install --frozen-lockfile` e mantém o
-  contêiner de pé; o app sobe na mão: `docker compose exec chat-api pnpm start:dev` e
-  `docker compose exec web pnpm dev`. Se o install falha, o contêiner continua de pé e o erro
-  fica em `docker compose logs`.
+- As imagens incluem Node 26 e pnpm 11, mas não incluem dependências dos projetos. Ao iniciar, o
+  `CMD` roda `pnpm install --frozen-lockfile --store-dir=/home/node/app/.pnpm-store` e mantém o
+  contêiner de pé, mesmo se a instalação falhar; a saída fica nos logs. Os servidores dos apps não
+  iniciam automaticamente: web e API são iniciados manualmente com `pnpm dev --hostname
+  0.0.0.0` e `pnpm start:dev`, respectivamente, dentro de seus contêineres.
 - O repositório inteiro é montado em `/home/node/app`, para o `file:../../packages/chat-events`
   resolver igual dentro e fora. O `node_modules` fica no disco do host, visível para o editor.
 - Os contêineres rodam como `node` (uid 1000), o mesmo usuário do host no WSL.
@@ -362,7 +363,15 @@ Entram depois: o Redis, quando o primeiro uso dele for implementado, e os servi�
 e cria os bancos `chat`, `agents` e `business`, cada um com um usuário dono de mesmo nome, e o
 usuário `business_readonly`, que só conecta no `business` e só lê, inclusive as tabelas que o
 script de carga criar depois ([ADR 0013](adr/0013-somente-leitura-banco-e-codigo.md)). Nenhum
-usuário conecta num banco que não é o seu. Senhas iguais ao nome do usuário, só locais.
+usuário conecta num banco que não é o seu. Senhas iguais ao nome do usuário, só locais. O volume
+de dados usa `/var/lib/postgresql`, como requer a imagem Postgres 18.
+
+**SeaweedFS.** `weed mini` mantém os dados em `/data`, cria o bucket `reports` na primeira
+inicialização e oferece S3 em `localhost:8333`. O volume de dados sobrevive a reinicializações.
+Credenciais de desenvolvimento são locais e não são usadas fora deste ambiente.
+
+**Volumes e portas.** Postgres e SeaweedFS usam volumes nomeados, apagados com
+`docker compose down -v`. As portas publicadas dos serviços ficam ligadas a `127.0.0.1`.
 
 **Diferenças do ambiente local que mudam o código**
 

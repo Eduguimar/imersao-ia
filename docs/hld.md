@@ -363,11 +363,13 @@ saúde. A PaaS escolhida precisa oferecer: contêineres para Next.js, NestJS com
 Postgres gerenciado; Redis gerenciado; rede privada; armazenamento compatível com S3; volta
 automática de versão.
 
-**Local.** Tudo em contêineres: as quatro aplicações, o Postgres com os três bancos, o Redis e um
-substituto compatível com S3. O modelo de IA é o provedor real, com chave de desenvolvimento, porque
-não há resposta simulada. O Banco de negócio é preenchido pelo mesmo script de carga, com dados de
-exemplo. O local não reproduz a rede privada nem a volta automática da PaaS; como não há staging,
-isso fica como risco (seção 11).
+**Local.** O Docker Compose sobe o Frontend/BFF, a API do chat, uma instância de Postgres com os
+bancos do chat, dos agentes e de negócio, e SeaweedFS como substituto do armazenamento compatível
+com S3. O banco de negócio começa vazio, sem carga de dados de exemplo. O Redis e os contêineres do
+Serviço de agentes e do Worker entram quando seus usos e projetos forem implementados. Quando o
+Serviço de agentes estiver no ambiente, ele usa o provedor real de IA com uma chave de
+desenvolvimento; não há resposta simulada. O local não reproduz a rede privada nem a volta automática
+da PaaS; como não há staging, isso fica como risco (seção 11).
 
 **Entrega.** Um pipeline de integração contínua roda os testes e, se passam, manda a PaaS
 implantar; a PaaS confere a saúde da nova versão e mantém a anterior se a conferência falhar. As
