@@ -1,6 +1,6 @@
 # LLD — Expert Chat
 
-2026-11-12 · Eduardo Guimarães · Status: rascunho · HLD: [hld.md](hld.md)
+2026-11-13 · Eduardo Guimarães · Status: rascunho · HLD: [hld.md](hld.md)
 
 **Onde mora cada fato**
 
@@ -243,10 +243,11 @@ exigem estão em "Conceitos transversais de implementação", seção "Concorrê
 **Índice das rotas**
 
 O índice por domínio (BFF; API do chat, para o BFF e para os bots; Serviço de agentes) e a lista
-de eventos do WebSocket estão a definir. O único comportamento já decidido:
+de eventos do WebSocket estão a definir. Rotas já registradas:
 
 | Método e caminho | Situação | Comportamento |
 | --- | --- | --- |
+| `POST /v1/auth/login` | existe | Recebe `LoginDto` e delega a autenticação ao `AuthService`; o service é stub |
 | Envio de mensagem no BFF (caminho a definir) | a detalhar | Mensagem gravada e agente sem receber o pedido: "Conceitos transversais de implementação", seção "Erros" |
 
 ## 6. Estados e regras
