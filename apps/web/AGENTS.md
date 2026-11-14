@@ -47,3 +47,33 @@ public/         Arquivos estáticos, como imagens e fontes (fora de `src/`).
 ## API Externas
 
 A comunicação com APIs será feita através do `fetch`, mas, não deve ser feita diretamente nos componentes ou Server Actions. Em vez disto, crie serviços http dedicados na pasta `app/services/` e utilize-os nos componentes ou Server Actions.
+
+# Next Web Coding Standards
+
+## Idioma
+
+- **Identificadores em inglês:** variáveis, funções, classes, tipos e arquivos.
+- **Texto em português:** comentários, mensagens de erro de domínio, mensagens de log e nomes de teste (`describe` e `it`).
+
+## Classes, funções e tipos
+
+- Classe com nomes no estilo `PascalCase`.
+- **Classe com o papel no fim:** `ConversationsService`, `ApiError`.
+- **Conjunto fechado de valores é união de strings em `snake_case`, sem `enum`:** `type SortOrder = 'asc' | 'desc'`.
+
+## Variáveis e constantes
+
+- Variável em `camelCase`.
+- **Constante de módulo em `SCREAMING_SNAKE_CASE`:** `API_PREFIX`, `USER_FIELDS`, `INTERNAL_ERROR`.
+- **Booleano** começa com `is`, `has` ou `can`, ou é um adjetivo ou particípio: `isUniqueViolation`, `created`.
+
+## Funções e métodos
+
+- Função em `camelCase`.
+
+## Componentes React
+
+- **Nome do componente** em `PascalCase` quando o componente é uma classe.
+- **Função de componente** em `camelCase`.
+- **Props** em `camelCase`.
+- **Hooks** em `camelCase`.
